@@ -13,7 +13,7 @@ vector<int> set[2];
 vector<pr> sums[2];
 void findSums(int size, bool setNum)
 {
-    int sum; // // //
+    int sum;
     for (int i = 0; i < 1 << size; i++)
     {
         for (int j = i; j; j = (j - 1) & i)
