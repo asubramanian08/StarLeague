@@ -17,7 +17,8 @@
 		"ostream": "cpp",
 		"new": "cpp",
 		"filesystem": "cpp",
-		"iostream": "cpp"
+		"iostream": "cpp",
+		"map": "cpp"
 	},
 	"editor.formatOnPaste": true,
 	"editor.formatOnSave": true,

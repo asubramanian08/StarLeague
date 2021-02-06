@@ -10,7 +10,6 @@
         //"${fileDirname}/${input:Compiler Arg}",
         //"${fileDirname}/**.cpp",
         "${file}",
-        //"${fileDirname}/list.cpp",
         "-o",
         "${fileDirname}/${fileBasenameNoExtension}"
       ],
