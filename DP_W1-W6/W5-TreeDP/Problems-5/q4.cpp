@@ -1,4 +1,5 @@
 #include <iostream>
+#include <string.h>
 using namespace std;
 #define BIG_NUM 1000000000000000
 struct dir
@@ -21,6 +22,7 @@ int findRoot(int numDirs)
     for (int i = 0; i < numDirs; i++)
         if (used[i])
             return i;
+    return 0; //never happen
 }
 void finishDirInfo(int currDir)
 {
@@ -31,24 +33,30 @@ void finishDirInfo(int currDir)
         return;
     }
     work_space[currDir].charsDown = 0;
-    work_space[currDir].filesInside = work_space[currDir].numCont;
+    work_space[currDir].filesInside = 0;
     for (int i = 0; i < work_space[currDir].numCont; i++)
     {
         finishDirInfo(work_space[currDir].contains[i]);
-        work_space[currDir].charsDown += work_space[work_space[currDir].contains[i]].charsDown +
-                                         work_space[work_space[currDir].contains[i]].nameLen; //Alter
+        if (!work_space[work_space[currDir].contains[i]].is_file)
+            work_space[currDir].charsDown += work_space[work_space[currDir].contains[i]].charsDown +
+                                             ((work_space[work_space[currDir].contains[i]].nameLen + 1) *
+                                              work_space[work_space[currDir].contains[i]].filesInside);
+        else
+            work_space[currDir].charsDown += work_space[work_space[currDir].contains[i]].nameLen;
         work_space[currDir].filesInside += work_space[work_space[currDir].contains[i]].filesInside;
     }
 }
-long long bestLen(int currDir, long long chars, int filesPrev)
+int totalFiles;
+long long bestLen(int currDir, long long chars)
 {
     if (work_space[currDir].is_file)
         return BIG_NUM;
-    long long myChars = 0; // change
+    long long myChars = chars +
+                        ((totalFiles - work_space[currDir].filesInside) * 3) -
+                        (work_space[currDir].filesInside * (work_space[currDir].nameLen + 1));
     long long best = myChars;
     for (int i = 0; i < work_space[currDir].numCont; i++)
-        best = min(best, bestLen(work_space[currDir].contains[i], myChars,
-                                 work_space[currDir].filesInside));
+        best = min(best, bestLen(work_space[currDir].contains[i], myChars));
     return best;
 }
 int main(void)
@@ -63,17 +71,18 @@ int main(void)
     for (int i = 0; i < numDirs; i++)
     {
         work_space[i].nameLen = 0;
-        do
-        {
-            cin >> ch;
+        getchar(); //new line
+        while ((ch = getchar()) != ' ')
             work_space[i].nameLen++;
-        } while (ch != ' ');
         cin >> work_space[i].numCont;
         if (work_space[i].numCont != 0)
         {
             work_space[i].contains = new int[work_space[i].numCont];
             for (int j = 0; j < work_space[i].numCont; j++)
+            {
                 cin >> work_space[i].contains[j];
+                work_space[i].contains[j]--;
+            }
             work_space[i].is_file = false;
         }
         else
@@ -81,7 +90,15 @@ int main(void)
     }
     int root = findRoot(numDirs);
     finishDirInfo(root);
-    long long ans = bestLen(0, 0, 0); // might need to change
+    long long ans = work_space[root].charsDown;
+    long long curr;
+    totalFiles = work_space[root].filesInside;
+    for (int i = 0; i < work_space[root].numCont; i++)
+    {
+        curr = bestLen(work_space[root].contains[i],
+                       work_space[root].charsDown);
+        ans = min(ans, curr);
+    }
     cout << ans;
     return 0;
 }
