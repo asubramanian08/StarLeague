@@ -2,43 +2,76 @@
 #include <vector>
 using namespace std;
 
+#define BIG_NUM 10000000
 struct node
 {
     vector<int> conns;
     bool state;
+    int cost[2][2];
+    //cost[tog][on] = cost[1][1]
 };
-int *inArr;
-int *outArr;
-bool *toggle;
 node *lights;
 void calcNode(int pos, int parent)
 {
     for (int i = 0; i < lights[pos].conns.size(); i++)
         if (lights[pos].conns[i] != parent)
             calcNode(lights[pos].conns[i], pos);
-    int flip = 1;
-    int stay = 0;
-    bool flipLit = !lights[pos].state;
+
+    lights[pos].cost[0][lights[pos].state] = 0;
+    lights[pos].cost[1][lights[pos].state] = BIG_NUM;
+    lights[pos].cost[0][!lights[pos].state] = BIG_NUM;
+    lights[pos].cost[1][!lights[pos].state] = 1;
+
+    int temp1, temp2;
     for (int i = 0; i < lights[pos].conns.size(); i++)
         if (lights[pos].conns[i] != parent)
         {
-            flip += outArr[lights[pos].conns[i]];
-            if (toggle[lights[pos].conns[i]])
-                flipLit = !flipLit;
-            stay += inArr[lights[pos].conns[i]];
+            temp1 = lights[pos].cost[0][lights[pos].state];
+            temp2 = lights[pos].cost[0][!lights[pos].state];
+
+            lights[pos].cost[0][lights[pos].state] = BIG_NUM;
+            if ((temp1 != BIG_NUM) && (lights[lights[pos].conns[i]].cost[0][1] != BIG_NUM))
+                lights[pos].cost[0][lights[pos].state] =
+                    min(lights[pos].cost[0][lights[pos].state],
+                        temp1 + lights[lights[pos].conns[i]].cost[0][1]);
+            if ((temp2 != BIG_NUM) && (lights[lights[pos].conns[i]].cost[1][1] != BIG_NUM))
+                lights[pos].cost[0][lights[pos].state] =
+                    min(lights[pos].cost[0][lights[pos].state],
+                        temp2 + lights[lights[pos].conns[i]].cost[1][1]);
+
+            lights[pos].cost[0][!lights[pos].state] = BIG_NUM;
+            if ((temp2 != BIG_NUM) && (lights[lights[pos].conns[i]].cost[0][1] != BIG_NUM))
+                lights[pos].cost[0][!lights[pos].state] =
+                    min(lights[pos].cost[0][!lights[pos].state],
+                        temp2 + lights[lights[pos].conns[i]].cost[0][1]);
+            if ((temp1 != BIG_NUM) && (lights[lights[pos].conns[i]].cost[1][1] != BIG_NUM))
+                lights[pos].cost[0][!lights[pos].state] =
+                    min(lights[pos].cost[0][!lights[pos].state],
+                        temp1 + lights[lights[pos].conns[i]].cost[1][1]);
+
+            temp1 = lights[pos].cost[1][lights[pos].state];
+            temp2 = lights[pos].cost[1][!lights[pos].state];
+
+            lights[pos].cost[1][lights[pos].state] = BIG_NUM;
+            if ((temp1 != BIG_NUM) && (lights[lights[pos].conns[i]].cost[0][0] != BIG_NUM))
+                lights[pos].cost[1][lights[pos].state] =
+                    min(lights[pos].cost[1][lights[pos].state],
+                        temp1 + lights[lights[pos].conns[i]].cost[0][0]);
+            if ((temp2 != BIG_NUM) && (lights[lights[pos].conns[i]].cost[1][0] != BIG_NUM))
+                lights[pos].cost[1][lights[pos].state] =
+                    min(lights[pos].cost[1][lights[pos].state],
+                        temp2 + lights[lights[pos].conns[i]].cost[1][0]);
+
+            lights[pos].cost[1][!lights[pos].state] = BIG_NUM;
+            if ((temp2 != BIG_NUM) && (lights[lights[pos].conns[i]].cost[0][0] != BIG_NUM))
+                lights[pos].cost[1][!lights[pos].state] =
+                    min(lights[pos].cost[1][!lights[pos].state],
+                        temp2 + lights[lights[pos].conns[i]].cost[0][0]);
+            if ((temp1 != BIG_NUM) && (lights[lights[pos].conns[i]].cost[1][0] != BIG_NUM))
+                lights[pos].cost[1][!lights[pos].state] =
+                    min(lights[pos].cost[1][!lights[pos].state],
+                        temp1 + lights[lights[pos].conns[i]].cost[1][0]);
         }
-    if (!flipLit)
-    {
-        inArr[pos] = stay;
-        outArr[pos] = flip;
-        toggle[pos] = false;
-    }
-    else
-    {
-        inArr[pos] = flip;
-        outArr[pos] = stay;
-        toggle[pos] = true;
-    }
 }
 int main(void)
 {
@@ -60,10 +93,11 @@ int main(void)
         lights[n2].conns.push_back(n1);
     }
 
-    inArr = new int[bulbs];
-    outArr = new int[bulbs];
-    toggle = new bool[bulbs];
     calcNode(0, -1);
-    cout << inArr[0];
+    int ans = min(lights[0].cost[0][1], lights[0].cost[1][1]);
+    if (ans != BIG_NUM)
+        cout << ans;
+    else
+        cout << "Impossible";
     return 0;
 }
