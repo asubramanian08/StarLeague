@@ -54,7 +54,4 @@
         "unordered_map": "cpp",
         "vector": "cpp"
     },
-    "editor.formatOnPaste": true,
-    "editor.formatOnSave": true,
-    "editor.formatOnType": true,
 }
