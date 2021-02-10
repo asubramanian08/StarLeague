@@ -57,8 +57,4 @@
     "editor.formatOnPaste": true,
     "editor.formatOnSave": true,
     "editor.formatOnType": true,
-    "gitlens.codeLens.enabled": false,
-    "gitlens.codeLens.authors.enabled": false,
-    "gitlens.codeLens.recentChange.enabled": false,
-    //"gitlens.blame.line.enabled": false
 }
