@@ -5,6 +5,8 @@ using namespace std;
 long long **DP;
 void findVal(int nodes, int height)
 {
+    if (DP[nodes][height])
+        return;
     long long ans = 0;
     nodes--;  //For the
     height--; //Root node
@@ -17,7 +19,8 @@ void findVal(int nodes, int height)
                         ans += DP[i][height] * DP[nodes - i][j];
                     else
                         ans += 2 * DP[i][height] * DP[nodes - i][j];
-                    ans = ans % MOD;
+                    ans = ((ans - 1) % MOD) + 1;
+                    //ans = ans % MOD;
                 }
     DP[nodes + 1][height + 1] = ans;
 }
@@ -32,16 +35,18 @@ int main(void)
     for (int i = 0; i <= nodes; i++)
         DP[i] = new long long[height + 1];
 
-    for (int i = 0; i <= height; i++)
+    /*for (int i = 0; i <= height; i++)
         DP[0][i] = 0;
     for (int i = 0; i <= nodes; i++)
-        DP[i][0] = 0;
+        DP[i][0] = 0;*/
+    for (int i = 0; i <= nodes; i++)
+        for (int j = 0; j <= height; j++)
+            DP[i][j] = 0;
+
     DP[1][1] = 1;
     for (int i = 1; i <= nodes; i++)
         for (int j = 1; j <= height; j++)
-            if ((i < (j * 2) - 1) || (i >= 1 << j))
-                DP[i][j] = 0;
-            else if (i != j)
+            if (i & 1)
                 findVal(i, j);
     cout << DP[nodes][height];
     return 0;
