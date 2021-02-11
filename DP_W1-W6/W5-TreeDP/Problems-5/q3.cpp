@@ -19,7 +19,7 @@ void findVal(int nodes, int height)
                         ans += DP[i][height] * DP[nodes - i][j];
                     else
                         ans += 2 * DP[i][height] * DP[nodes - i][j];
-                    ans = ((ans - 1) % MOD) + 1;
+                    ans = ans % MOD;
                 }
     DP[nodes + 1][height + 1] = ans;
 }
@@ -28,6 +28,7 @@ int main(void)
     /*FILE *junk;
     junk = freopen("nocows.in", "r", stdin);
     junk = freopen("nocows.out", "w", stdout);*/
+
     int nodes, height;
     cin >> nodes >> height;
     DP = new long long *[nodes + 1];
