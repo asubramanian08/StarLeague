@@ -1,6 +1,6 @@
 Sorting
 Searching
-Built-in Data Structures (Array, List, Stack, Queue, Deque, Priority Queue, Set, Map)
+Built-in Data Structures (Array, List, Stack, Queue, Dequeue, Priority Queue, Set, Map)
 Recursion
 Divide and Conquer
 Backtracking

@@ -21,3 +21,10 @@ In trees:
     The big Problem is the whole tree
     The sub problem are the sub trees
     The base case is no tree / leaf node
+
+For single source shorted path:
+        Problem         |      Algorithm     |      Order     |    Data structure
+-------------------------------------------------------------------------------------
+    Negative weights    |    Bellmon-Ford    |    N^2         |    Vector
+    Positive weights    |    Dijkstra's      |    E lg (V)    |    Priority Queue
+    Unweighted          |    BFS             |    V + E       |    Queue / Deck
