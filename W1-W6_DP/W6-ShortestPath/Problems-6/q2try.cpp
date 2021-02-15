@@ -1,20 +1,18 @@
-#include <iostream>
+/*#include <iostream>
 #include <deque>
 #include <vector>
-#include <queue>
 using namespace std;
 
 typedef pair<int, int> pii;
-typedef pair<pii, pii> pii_ii;
-//typedef pair<pii, long long> pii_ll;
+typedef pair<pii, long long> pii_ll;
 #define BIG_NUM 100000
 #define InRange(x, y) ((x >= 0) && (x < rows) && (y >= 0) && (y < cols))
 
 int main(void)
 {
-    /*FILE *junk;
+    FILE *junk;
     junk = freopen("lilypad.in", "r", stdin);
-    junk = freopen("lilypad.out", "w", stdout);*/
+    junk = freopen("lilypad.out", "w", stdout);
     int rows, cols;
     cin >> rows >> cols;
     int **grid = new int *[rows];
@@ -70,73 +68,21 @@ int main(void)
         }
     }
 
-    //init arrays
+    //find the best paths
     int **costGrid = new int *[rows];
     long long **timesGrid = new long long *[rows];
-    bool **vis = new bool *[rows];
     for (int i = 0; i < rows; i++)
     {
         costGrid[i] = new int[cols];
         timesGrid[i] = new long long[cols];
-        vis[i] = new bool[cols];
         for (int j = 0; j < cols; j++)
         {
             costGrid[i][j] = BIG_NUM;
             timesGrid[i][j] = 0;
-            vis[i][j] = false;
-        }
-    }
-    costGrid[start.first][start.second] = 0;
-    timesGrid[start.first][start.second] = 1;
-
-    //use deque and figure out path
-    /*deque<pii> BFS_DEQ;
-    BFS_DEQ.push_front(start);
-    pii node;
-    while (!BFS_DEQ.empty())
-    {
-        node = BFS_DEQ.front();
-        BFS_DEQ.pop_front();
-        for (int i = 0; i < conns[node.first][node.second].size(); i++)
-        {
-            pii to = conns[node.first][node.second][i];
-            if (costGrid[to.first][to.second] > costGrid[node.first][node.second] + grid[to.first][to.second])
-            {
-                costGrid[to.first][to.second] = costGrid[node.first][node.second] + grid[to.first][to.second];
-                if (grid[to.first][to.second] == 0)
-                    BFS_DEQ.push_front(to);
-                else
-                    BFS_DEQ.push_back(to);
-            }
-        }
-    }*/
-
-    costGrid[start.first][start.second] = 0;
-    timesGrid[start.first][start.second] = 1;
-    deque<pii> BFS_DEQ;
-    BFS_DEQ.push_front(start);
-    pii node;
-    while (!BFS_DEQ.empty())
-    {
-        node = BFS_DEQ.front();
-        BFS_DEQ.pop_front();
-        for (int i = 0; i < conns[node.first][node.second].size(); i++)
-        {
-            pii to = conns[node.first][node.second][i];
-            if (costGrid[to.first][to.second] > costGrid[node.first][node.second] + grid[to.first][to.second])
-            {
-                costGrid[to.first][to.second] = costGrid[node.first][node.second] + grid[to.first][to.second];
-                if (grid[to.first][to.second] == 0)
-                    BFS_DEQ.push_front(to);
-                else
-                    BFS_DEQ.push_back(to);
-            }
-            if (costGrid[to.first][to.second] >= costGrid[node.first][node.second] + grid[to.first][to.second])
-                timesGrid[to.first][to.second] += timesGrid[node.first][node.second];
         }
     }
 
-    /*costGrid[start.first][start.second] = 0;
+    costGrid[start.first][start.second] = 0;
     timesGrid[start.first][start.second] = 1;
     deque<pii_ll> BFS_DEQ;
     BFS_DEQ.push_front(make_pair(start, 0));
@@ -162,24 +108,13 @@ int main(void)
             if (costGrid[to.first][to.second] >= costGrid[node.first][node.second] + grid[to.first][to.second])
                 timesGrid[to.first][to.second] += timesGrid[node.first][node.second] - prevVal;
         }
-    }*/
-
-    if (costGrid[end.first][end.second] == BIG_NUM)
-    {
-        cout << "-1";
-        return 0;
     }
 
-    /*queue<pii_ii> BFS;
-    BFS.push(make_pair(start, pii(-1, -1)));
-    timesGrid[start.first][start.second] = 1;
-
-    while (!BFS.empty())
-    {
-    }*/
-
-    cout << costGrid[end.first][end.second] << '\n'
-         << timesGrid[end.first][end.second];
+    if (costGrid[end.first][end.second] != BIG_NUM)
+        cout << costGrid[end.first][end.second] << '\n'
+             << timesGrid[end.first][end.second];
+    else
+        cout << "-1";
 
     return 0;
-}
+}*/
