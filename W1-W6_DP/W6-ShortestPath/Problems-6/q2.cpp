@@ -12,9 +12,9 @@ typedef pair<pii, pii> pii_ii;
 
 int main(void)
 {
-    /*FILE *junk;
+    FILE *junk;
     junk = freopen("lilypad.in", "r", stdin);
-    junk = freopen("lilypad.out", "w", stdout);*/
+    junk = freopen("lilypad.out", "w", stdout);
     int rows, cols;
     cin >> rows >> cols;
     int **grid = new int *[rows];
@@ -111,7 +111,7 @@ int main(void)
         }
     }*/
 
-    costGrid[start.first][start.second] = 0;
+    /*costGrid[start.first][start.second] = 0;
     timesGrid[start.first][start.second] = 1;
     deque<pii> BFS_DEQ;
     BFS_DEQ.push_front(start);
@@ -125,6 +125,71 @@ int main(void)
             pii to = conns[node.first][node.second][i];
             if (costGrid[to.first][to.second] > costGrid[node.first][node.second] + grid[to.first][to.second])
             {
+                // found a better path
+                costGrid[to.first][to.second] = costGrid[node.first][node.second] + grid[to.first][to.second];
+                if (grid[to.first][to.second] == 0)
+                    BFS_DEQ.push_front(to);
+                else
+                    BFS_DEQ.push_back(to);
+            }
+            if (costGrid[to.first][to.second] == costGrid[node.first][node.second] + grid[to.first][to.second])
+                timesGrid[to.first][to.second] += timesGrid[node.first][node.second];
+            //timesGrid[to.first][to.second]++;
+        }
+    }*/
+
+    costGrid[start.first][start.second] = 0;
+    timesGrid[start.first][start.second] = 1;
+    vis[start.first][start.second] = true;
+    deque<pii> BFS_DEQ;
+    BFS_DEQ.push_front(start);
+    pii node;
+    while (!BFS_DEQ.empty())
+    {
+        node = BFS_DEQ.front();
+        BFS_DEQ.pop_front();
+        for (int i = 0; i < conns[node.first][node.second].size(); i++)
+        {
+            pii to = conns[node.first][node.second][i];
+
+            //not visited yet or found a better path
+            if (!vis[to.first][to.second] ||
+                (costGrid[to.first][to.second] > costGrid[node.first][node.second] + grid[to.first][to.second]))
+            {
+                if (grid[to.first][to.second] == 0)
+                    BFS_DEQ.push_front(to);
+                else
+                    BFS_DEQ.push_back(to);
+                vis[to.first][to.second] = true;
+                costGrid[to.first][to.second] = costGrid[node.first][node.second] + grid[to.first][to.second];
+                timesGrid[to.first][to.second] = timesGrid[node.first][node.second];
+            }
+            //add the number a ways
+            else if (costGrid[to.first][to.second] == costGrid[node.first][node.second] + grid[to.first][to.second])
+                timesGrid[to.first][to.second] += timesGrid[node.first][node.second];
+        }
+    }
+
+    /*costGrid[start.first][start.second] = 0;
+    timesGrid[start.first][start.second] = 1;
+    deque<pii> BFS_DEQ;
+    BFS_DEQ.push_front(start);
+    pii node;
+    bool endVis = false;
+    while (!endVis)
+    {
+        node = BFS_DEQ.front();
+        BFS_DEQ.pop_front();
+        if (node == end)
+        {
+            endVis = true;
+            break;
+        }
+        for (int i = 0; i < conns[node.first][node.second].size(); i++)
+        {
+            pii to = conns[node.first][node.second][i];
+            if (costGrid[to.first][to.second] >= costGrid[node.first][node.second] + grid[to.first][to.second])
+            {
                 costGrid[to.first][to.second] = costGrid[node.first][node.second] + grid[to.first][to.second];
                 if (grid[to.first][to.second] == 0)
                     BFS_DEQ.push_front(to);
@@ -132,9 +197,10 @@ int main(void)
                     BFS_DEQ.push_back(to);
             }
             if (costGrid[to.first][to.second] >= costGrid[node.first][node.second] + grid[to.first][to.second])
-                timesGrid[to.first][to.second] += timesGrid[node.first][node.second];
+                //timesGrid[to.first][to.second] += timesGrid[node.first][node.second];
+                timesGrid[to.first][to.second]++;
         }
-    }
+    }*/
 
     /*costGrid[start.first][start.second] = 0;
     timesGrid[start.first][start.second] = 1;
@@ -169,14 +235,6 @@ int main(void)
         cout << "-1";
         return 0;
     }
-
-    /*queue<pii_ii> BFS;
-    BFS.push(make_pair(start, pii(-1, -1)));
-    timesGrid[start.first][start.second] = 1;
-
-    while (!BFS.empty())
-    {
-    }*/
 
     cout << costGrid[end.first][end.second] << '\n'
          << timesGrid[end.first][end.second];

@@ -2,7 +2,7 @@
 #include <vector>
 using namespace std;
 
-#define UNSET -1
+#define BIG_NUM 1000000
 struct pie
 {
     int bVal;
@@ -23,6 +23,34 @@ int orgCompare(const void *p1, const void *p2)
     return ((pie *)p1)->orgLoc - ((pie *)p2)->orgLoc;
 }
 
+//initialization
+pie *bPies;
+pie *ePies;
+vector<int> *bConns;
+vector<int> *eConns;
+int *bCost;
+int *eCost;
+void findB_Cost(int node, int parent);
+void findE_Cost(int node, int parent);
+
+void findB_Cost(int node, int parent)
+{
+    if (bCost[node] != BIG_NUM)
+        return;
+    for (int i = 0; i < bConns[node].size(); i++)
+        if (bConns[node][i] != parent)
+            findB_Cost(bConns[node][i], node);
+
+    if (bPies[node].eVal == 0)
+    {
+        bCost[node] = 1;
+        return;
+    }
+    bCost
+}
+void findE_Cost(int node, int parent)
+{
+}
 int main(void)
 {
     /*FILE *junk;
@@ -31,7 +59,7 @@ int main(void)
     //get pies
     int numPies, range;
     cin >> numPies >> range;
-    pie *bPies = new pie[numPies];
+    bPies = new pie[numPies];
     for (int i = 0; i < numPies; i++)
     {
         cin >> bPies[i].bVal;
@@ -39,7 +67,7 @@ int main(void)
         bPies[i].orgLoc = i;
     }
     qsort(bPies, numPies, sizeof(pie), bCompare);
-    pie *ePies = new pie[numPies];
+    ePies = new pie[numPies];
     for (int i = 0; i < numPies; i++)
     {
         cin >> ePies[i].bVal;
@@ -49,7 +77,7 @@ int main(void)
     qsort(ePies, numPies, sizeof(pie), eCompare);
 
     //find graph
-    vector<int> *bConns = new vector<int>[numPies];
+    bConns = new vector<int>[numPies];
     for (int i = 0; i < numPies; i++)
     {
         int low = 0;
@@ -65,7 +93,7 @@ int main(void)
         for (int j = high; (j < numPies) && (j < bPies[i].eVal + range); j++)
             bConns[i].push_back(ePies[j].orgLoc);
     }
-    vector<int> *eConns = new vector<int>[numPies];
+    eConns = new vector<int>[numPies];
     for (int i = 0; i < numPies; i++)
     {
         int low = 0;
@@ -84,5 +112,7 @@ int main(void)
     qsort(bPies, numPies, sizeof(pie), orgCompare);
     qsort(ePies, numPies, sizeof(pie), orgCompare);
 
+    bCost = new int[numPies];
+    eCost = new int[numPies];
     return 0;
 }
