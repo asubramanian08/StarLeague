@@ -12,9 +12,9 @@ typedef pair<pii, pii> pii_ii;
 
 int main(void)
 {
-    FILE *junk;
+    /*FILE *junk;
     junk = freopen("lilypad.in", "r", stdin);
-    junk = freopen("lilypad.out", "w", stdout);
+    junk = freopen("lilypad.out", "w", stdout);*/
     int rows, cols;
     cin >> rows >> cols;
     int **grid = new int *[rows];

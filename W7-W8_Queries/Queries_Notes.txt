@@ -1,0 +1,8 @@
+Offline: not changing
+Online: changing
+
+Online/Offline solution methods:
+in Range queries notes
+
+Offline:
+don't have to answer in given order
