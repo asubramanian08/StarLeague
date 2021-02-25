@@ -19,7 +19,7 @@ thing to do.
 
 INPUT FORMAT (file paintbarn.in):
 
-The first line of input contains N and K ( <= K, N <= 10^5). Each of the remaining N lines contains four 
+The first line of input contains N and K (1 <= K, N <= 10^5). Each of the remaining N lines contains four 
 integers x1,y1,x2,y2 describing a rectangular region being painted, with lower-left corner (x1,y1) and 
 upper-right corner (x2,y2). All x and y values are in the range 0...200, and all rectangles have positive area.
 
