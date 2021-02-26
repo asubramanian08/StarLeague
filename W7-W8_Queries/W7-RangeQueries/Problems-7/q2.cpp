@@ -1,6 +1,6 @@
 #include <iostream>
 using namespace std;
-
+//do Kadence Algo
 #define BARN_SIDE 201
 int main(void)
 {
