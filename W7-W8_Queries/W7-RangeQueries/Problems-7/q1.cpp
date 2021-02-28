@@ -10,9 +10,9 @@ typedef pair<int, int> pii;
 int numCows;
 int main(void)
 {
-    FILE *junk;
+    /*FILE *junk;
     junk = freopen("lineupg.in", "r", stdin);
-    junk = freopen("lineupg.out", "w", stdout);
+    junk = freopen("lineupg.out", "w", stdout);*/
 
     //reading
     int queries;
