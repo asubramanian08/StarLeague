@@ -59,6 +59,7 @@
         "istream": "cpp",
         "queue": "cpp",
         "sstream": "cpp",
-        "stack": "cpp"
+        "stack": "cpp",
+        "initializer_list": "cpp"
     },
 }

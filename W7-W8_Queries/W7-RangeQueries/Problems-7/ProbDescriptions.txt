@@ -4,3 +4,4 @@ Springboards | USACO-G-JAN2020 | DP with optimization, Online RMQ
 Why Did the Cow Cross the Road III | USACO-G-FEB2017 | Fenwick tree or Mo's algorithm
 
 question 2 had hint - Kadane algorithm
+question 3 - got after looking at his sol. - order of processing
