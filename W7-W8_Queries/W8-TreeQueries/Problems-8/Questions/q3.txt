@@ -1,10 +1,10 @@
 Milk Visits (USACO 2019 Dec, Gold)
 
-Farmer John is planning to build N (1<=N,=10^5) farms that will be connected by N-1 roads, forming a tree (i.e., 
+Farmer John is planning to build N (1<=N<=10^5) farms that will be connected by N-1 roads, forming a tree (i.e., 
 all farms are reachable from each-other, and there are no cycles). Each farm contains a cow with an integer type 
 Ti between 1 and N inclusive.
 
-Farmer John's M friends (1<=M<=105) often come to visit him. During a visit with friend i, Farmer John will walk 
+Farmer John's M friends (1<=M<=10^5) often come to visit him. During a visit with friend i, Farmer John will walk 
 with his friend along the unique path of roads from farm Ai to farm Bi (it may be the case that Ai=Bi). 
 Additionally, they can try some milk from any cow along the path they walk. Since most of Farmer John's friends 
 are also farmers, they have very strong preferences regarding milk. Each of his friends will only drink milk from 
