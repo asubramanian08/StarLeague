@@ -3,6 +3,44 @@
 #include <stack>
 using namespace std;
 
+//ancestor decedent relationship
+class ADR
+{
+private:
+    int *inTime;
+    int *outTime;
+    int Time, numElements;
+    vector<int> *conns;
+    void findTimes(int node, int parent);
+
+public:
+    ADR() {}
+    ADR(vector<int> *conns, int n_ele);
+    bool isAns(int node, int parent);
+};
+void ADR::findTimes(int node, int parent)
+{
+    inTime[node] = ++Time;
+    for (int i = 0; i < conns[node].size(); i++)
+        if (conns[node][i] != parent)
+            findTimes(conns[node][i], node);
+    outTime[node] = ++Time;
+}
+bool ADR::isAns(int node, int parent)
+{
+    return (inTime[parent] <= inTime[node]) &&
+           (outTime[parent] >= outTime[node]);
+}
+ADR::ADR(vector<int> *conns_, int n_ele)
+{
+    conns = conns_;
+    numElements = n_ele;
+    inTime = new int[numElements];
+    outTime = new int[numElements];
+    Time = 0;
+    findTimes(0, -1);
+}
+
 // declarations and init.
 class query
 {
@@ -23,24 +61,12 @@ int *milk;
 vector<int> *conns;
 int Time, *inTime, *outTime;
 query *queries;
+ADR times;
 vector<pii> *nodeQuery;
 bool *happy;
 stack<int> *onPath;
 int *toNode;
 
-//funcs
-void findTimes(int node, int parent)
-{
-    inTime[node] = ++Time;
-    for (int i = 0; i < conns[node].size(); i++)
-        if (conns[node][i] != parent)
-            findTimes(conns[node][i], node);
-    outTime[node] = ++Time;
-}
-bool isAns(int node, int parent)
-{
-    return (inTime[parent] <= inTime[node]) && (outTime[parent] >= outTime[node]);
-}
 void DFS(int node, int parent)
 {
     onPath[milk[node]].push(node);
@@ -58,9 +84,9 @@ void DFS(int node, int parent)
         if (onPath[queries[nodeQuery[node][i].first].milkPref].empty())
             continue;
         posAns = onPath[queries[nodeQuery[node][i].first].milkPref].top();
-        if (isAns(node, posAns) &&                                        //it is ans. of this one
-            (!isAns(pairNode, posAns) ||                                  //not ans. of the other one
-             ((pairNode == posAns) || !isAns(pairNode, toNode[posAns])))) //OR is the LAC
+        if (times.isAns(node, posAns) &&                                        //it is ans. of this one
+            (!times.isAns(pairNode, posAns) ||                                  //not ans. of the other one
+             ((pairNode == posAns) || !times.isAns(pairNode, toNode[posAns])))) //OR is the LAC
             happy[nodeQuery[node][i].first] = true;
     }
 
@@ -99,12 +125,7 @@ int main(void)
         queries[i].f2--;
         queries[i].milkPref--;
     }
-
-    //Fix timings
-    inTime = new int[farms];
-    outTime = new int[farms];
-    Time = 0;
-    findTimes(0, -1);
+    times = ADR(conns, farms);
 
     //set up (data structures)
     nodeQuery = new vector<pii>[farms];
