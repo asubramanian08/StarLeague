@@ -64,6 +64,16 @@
         "__threading_support": "cpp",
         "cstdlib": "cpp",
         "iomanip": "cpp",
-        "numeric": "cpp"
+        "numeric": "cpp",
+        "__errc": "cpp",
+        "__nullptr": "cpp",
+        "cctype": "cpp",
+        "cstdint": "cpp",
+        "cstring": "cpp",
+        "ctime": "cpp",
+        "cwchar": "cpp",
+        "cwctype": "cpp",
+        "iosfwd": "cpp",
+        "stdexcept": "cpp"
     },
 }

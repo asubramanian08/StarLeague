@@ -2,3 +2,5 @@ Mostly 2D planes
 
 A lot of math theorems - week 9
 https://en.m.wikipedia.org/wiki/Shoelace_formula - finding area
+
+When looking at geometry problems - just look it up

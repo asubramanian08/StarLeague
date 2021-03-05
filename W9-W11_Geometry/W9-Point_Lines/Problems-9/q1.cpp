@@ -1,3 +1,5 @@
+//Total distance between points in manhatten distance
+
 #include <iostream>
 #include <algorithm>
 #include <cmath>
@@ -8,6 +10,7 @@ int cmp(const void *p1, const void *p2)
 {
     return *((int *)p1) - *((int *)p2);
 }
+
 int main(void)
 {
     //read
