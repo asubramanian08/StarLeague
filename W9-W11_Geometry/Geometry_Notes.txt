@@ -9,3 +9,7 @@ Winding points - if point inside polygon
 
 Shoelace - popular for calculating area
 diameter - look at slides
+
+Sweep Line vocab:
+Event point -> jump from one to the next
+Convex hull -> sort points by angles
