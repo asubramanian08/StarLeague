@@ -22,7 +22,7 @@ Line 1 .. Q: Line i answers query i with space separated four integers A, B, C, 
 left-bottom rectangle, B is the number of cows in the right-bottom rectangle, C is the number of cows in upper-
 right rectangle and D is the number of cows in the upper-left rectangle.
 
-SAMPLE INPUT (file: paritition.in)
+SAMPLE INPUT (file: partition.in)
 6 3
 3 2 3
 14 2 2
@@ -34,7 +34,7 @@ SAMPLE INPUT (file: paritition.in)
 7 3
 16 11
 
-SAMPLE OUTPUT (file: paritition.out)
+SAMPLE OUTPUT (file: partition.out)
 4 7 0 10
 3 2 10 6
 17 0 0 4

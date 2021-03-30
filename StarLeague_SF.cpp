@@ -3,8 +3,9 @@ using namespace std;
 
 int main(void)
 {
-    FILE *junk;
+    //read
+    /*FILE *junk;
     junk = freopen(".in", "r", stdin);
-    junk = freopen(".out", "w", stdout);
+    junk = freopen(".out", "w", stdout);*/
     return 0;
 }
