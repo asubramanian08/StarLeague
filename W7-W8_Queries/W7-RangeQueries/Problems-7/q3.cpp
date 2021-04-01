@@ -41,15 +41,15 @@ SQRT::SQRT(int sz)
 }
 void SQRT::updt(int idx, int val)
 {
-    if (val >= SQRTarr[idx])
+    if (SQRTarr[idx] <= val)
         return;
     SQRTarr[idx] = val;
-    block[idx / block_sz] = min(block[idx / block_sz], SQRTarr[idx]);
+    block[idx / block_sz] = min(block[idx / block_sz], val);
 }
 int SQRT::query(int idx)
 {
     int ans = BIG_NUM;
-    for (int i = idx / block_sz; i >= 0; i--)
+    for (int i = idx / block_sz - 1; i >= 0; i--)
         ans = min(ans, block[i]);
     for (int i = (idx / block_sz) * block_sz; i <= idx; i++)
         ans = min(ans, SQRTarr[i]);
@@ -76,15 +76,16 @@ int cmpY(const void *p1, const void *p2)
 }
 int lbound(int val)
 {
-    int low = 0, high = numBoards - 1;
-    if (end_y[low] >= val)
-        high = low;
-    while (high - low > 1)
-        if (end_y[(high + low) / 2] < val)
-            low = (high + low) / 2;
-        else
-            high = (high + low) / 2;
-    return high;
+    // int low = 0, high = numBoards - 1;
+    // if (end_y[low] >= val)
+    //     high = low;
+    // while (high - low > 1)
+    //     if (end_y[(high + low) / 2] < val)
+    //         low = (high + low) / 2;
+    //     else
+    //         high = (high + low) / 2;
+    // return high;
+    return lower_bound(&end_y[0], &end_y[numBoards], val) - &end_y[0];
 }
 
 int main(void)
@@ -134,10 +135,12 @@ int main(void)
         if (points[i].is_start)
             costToStart[points[i].brd_num] = costReduce.query(lbound(points[i].pt1.second));
         else
+        {
             costReduce.updt(lbound(points[i].pt1.second),
                             costToStart[points[i].brd_num] +
                                 (points[i].pt2.first - points[i].pt1.first) +
                                 (points[i].pt2.second - points[i].pt1.second));
+        }
 
     //get ans and print
     int ans = 2 * goal + costToStart[numBoards];
