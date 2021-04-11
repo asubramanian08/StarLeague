@@ -11,8 +11,8 @@ int numCows;
 int main(void)
 {
     /*FILE *junk;
-    junk = freopen("lineupg.in", "r", stdin);
-    junk = freopen("lineupg.out", "w", stdout);*/
+    junk = freopen("lineup.in", "r", stdin);
+    junk = freopen("lineup.out", "w", stdout);*/
 
     //reading
     int queries;

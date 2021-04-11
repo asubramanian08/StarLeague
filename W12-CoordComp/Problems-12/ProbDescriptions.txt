@@ -3,5 +3,4 @@ Square Overlap | USACO-S-JAN2013 | Sweep line or coordinate compression + 2D pre
 Delivery Route | USACO-S-JAN2012 | Construct graph + Dijkstra or Coordinate Comp. + BFS
 Grazing Area | STP | Coordinate Compression + DFS
 
-q3 he showed in WB notes
-q4 he showed in WB notes
+q3 and q4 he showed in WB notes
